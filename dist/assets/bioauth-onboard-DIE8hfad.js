@@ -1,0 +1,1 @@
+new TextEncoder;new TextDecoder;
