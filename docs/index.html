@@ -1,15 +1,15 @@
+```html
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Chrome Guard Install Guide</title>
+<title>Chrome Guard Visual Install Guide</title>
 
 <style>
 :root {
   --bg: #03070d;
-  --panel: rgba(8, 18, 32, 0.84);
+  --panel: rgba(8, 18, 32, 0.88);
   --cyan: #10d7ff;
   --green: #40ff6a;
   --yellow: #ffd84d;
@@ -46,6 +46,34 @@ body::before {
   z-index: -1;
 }
 
+nav {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  gap: 10px;
+  background: rgba(2, 8, 16, 0.75);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 10px;
+  backdrop-filter: blur(12px);
+}
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: 999px;
+}
+
+nav a:hover {
+  color: var(--text);
+  background: rgba(16, 215, 255, 0.12);
+}
+
 .deck { scroll-snap-type: y mandatory; }
 
 .slide {
@@ -53,7 +81,7 @@ body::before {
   scroll-snap-align: start;
   display: grid;
   place-items: center;
-  padding: 56px 24px;
+  padding: 76px 24px 56px;
   position: relative;
 }
 
@@ -91,9 +119,14 @@ h2 {
   text-transform: uppercase;
 }
 
+h3 {
+  margin: 0 0 10px;
+  font-size: 24px;
+}
+
 p {
   color: var(--muted);
-  font-size: clamp(18px, 2vw, 26px);
+  font-size: clamp(18px, 2vw, 25px);
   line-height: 1.45;
   margin: 0 0 20px;
 }
@@ -175,6 +208,50 @@ p {
   text-shadow: 0 0 34px rgba(255,216,77,0.8);
 }
 
+.flow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-top: 28px;
+  align-items: stretch;
+}
+
+.flow-box {
+  border: 1px solid rgba(16,215,255,0.28);
+  background: rgba(0,0,0,0.26);
+  border-radius: 18px;
+  padding: 18px;
+  min-height: 140px;
+  position: relative;
+}
+
+.flow-box b {
+  display: block;
+  color: var(--text);
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.flow-box span {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.flow-box::after {
+  content: "➜";
+  position: absolute;
+  right: -20px;
+  top: 44%;
+  color: var(--cyan);
+  font-size: 28px;
+  text-shadow: 0 0 18px rgba(16,215,255,0.8);
+}
+
+.flow-box:last-child::after {
+  content: "";
+}
+
 .steps {
   display: grid;
   gap: 18px;
@@ -218,26 +295,16 @@ p {
   font-size: 17px;
 }
 
-code {
+.copybox {
+  display: inline-block;
   color: var(--cyan);
   background: rgba(16,215,255,0.11);
   border: 1px solid rgba(16,215,255,0.25);
-  padding: 6px 10px;
-  border-radius: 10px;
-  font-size: 0.9em;
-}
-
-.arrow {
-  font-size: clamp(46px, 7vw, 90px);
-  color: var(--cyan);
-  text-shadow: 0 0 24px rgba(16,215,255,0.8);
-  animation: arrowMove 1.15s infinite alternate ease-in-out;
-  margin: 18px 0;
-}
-
-@keyframes arrowMove {
-  from { transform: translateX(-16px); opacity: 0.65; }
-  to { transform: translateX(16px); opacity: 1; }
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 22px;
+  font-weight: 900;
+  margin: 8px 0 16px;
 }
 
 .feature-grid {
@@ -306,180 +373,239 @@ code {
   pointer-events: none;
 }
 
-@media (max-width: 820px) {
+@media (max-width: 900px) {
+  nav { display: none; }
   .split { grid-template-columns: 1fr; }
   .card { padding: 28px; }
   .feature-grid { grid-template-columns: 1fr; }
+  .flow { grid-template-columns: 1fr; }
+  .flow-box::after {
+    content: "↓";
+    right: 50%;
+    top: auto;
+    bottom: -28px;
+    transform: translateX(50%);
+  }
+  .flow-box:last-child::after { content: ""; }
   .orb { width: 210px; height: 210px; font-size: 72px; }
   .footer { display: none; }
 }
 </style>
-
 </head>
 
 <body>
+
+<nav>
+  <a href="#start">Start</a>
+  <a href="#warning">Warning</a>
+  <a href="#install">Install</a>
+  <a href="#verify">BioAuth</a>
+  <a href="#support">Support</a>
+</nav>
+
 <main class="deck">
 
-  <section class="slide">
-    <div class="card split">
-      <div>
-        <h1>Chrome <span class="neon">Guard</span></h1>
-        <div class="pulse"></div>
-        <p>Real-time browser protection powered by Level3ID BioAuth and Proof-of-Human security.</p>
-        <div class="pill">Built by Level3ID</div>
-      </div>
-      <div>
-        <img class="logo" src="./assets/chrome-guard.png" alt="Chrome Guard Logo" />
-      </div>
+<section class="slide" id="start">
+  <div class="card split">
+    <div>
+      <h1>Chrome <span class="neon">Guard</span></h1>
+      <div class="pulse"></div>
+      <p>A visual install guide for real-time browser protection powered by Level3ID BioAuth and Proof-of-Human security.</p>
+      <div class="pill">Built by Level3ID · Tennessee, USA</div>
     </div>
-  </section>
-
-  <section class="slide">
-    <div class="card split">
-      <div>
-        <h2>This is <span class="neon">Dev Mode</span></h2>
-        <p>No Chrome Web Store delay. No middleman. Direct install for early access and evaluation.</p>
-        <p>You stay in control. Always.</p>
-      </div>
-      <div class="orb">🛡️</div>
-    </div>
-  </section>
-
-  <section class="slide">
-    <div class="card warning split">
-      <div>
-        <h2>Chrome will <span class="yellow">warn you</span></h2>
-        <p>This is normal. Chrome shows warnings for unpacked Developer Mode extensions.</p>
-        <p>That warning is about the install method, not the security posture.</p>
-      </div>
-      <div class="warning-icon">⚠️</div>
-    </div>
-  </section>
-
-  <section class="slide">
-    <div class="card">
-      <h2>Install in <span class="neon">4 steps</span></h2>
-      <div class="arrow">➜ ➜ ➜</div>
-
-```
-  <div class="steps">
-    <div class="step">
-      <div class="num">1</div>
-      <div><strong>Download</strong><span>Download the GitHub ZIP and extract the folder.</span></div>
-    </div>
-
-    <div class="step">
-      <div class="num">2</div>
-      <div><strong>Open Chrome Extensions</strong><span>Go to <code>chrome://extensions</code></span></div>
-    </div>
-
-    <div class="step">
-      <div class="num">3</div>
-      <div><strong>Enable Developer Mode</strong><span>Toggle Developer Mode ON in the top-right corner.</span></div>
-    </div>
-
-    <div class="step">
-      <div class="num">4</div>
-      <div><strong>Load Unpacked</strong><span>Click Load unpacked and select the <code>/dist</code> folder.</span></div>
+    <div>
+      <img class="logo" src="./assets/chrome-guard.png" alt="Chrome Guard Logo" />
     </div>
   </div>
-</div>
-```
+</section>
 
-  </section>
+<section class="slide">
+  <div class="card">
+    <h2>Install Flow</h2>
+    <p>This is the path. Simple. Manual. Transparent.</p>
 
-  <section class="slide">
-    <div class="card">
-      <h2>What Chrome Guard <span class="neon">does</span></h2>
-
-```
-  <div class="feature-grid">
-    <div class="feature">
-      <b>⚡ Real-time alerts</b>
-      <span>Detects browser protection shutdowns and alerts quickly.</span>
-    </div>
-
-    <div class="feature">
-      <b>🔒 Sensitive page protection</b>
-      <span>Protects high-risk pages like login and checkout flows.</span>
-    </div>
-
-    <div class="feature">
-      <b>🧬 BioAuth verification</b>
-      <span>Uses encrypted reference data and ephemeral verification captures.</span>
-    </div>
-
-    <div class="feature">
-      <b>🧠 Proof-of-Human</b>
-      <span>Supports human verification flows designed to stop automated abuse.</span>
+    <div class="flow">
+      <div class="flow-box">
+        <b>1. Download</b>
+        <span>Download the GitHub repo as a ZIP file.</span>
+      </div>
+      <div class="flow-box">
+        <b>2. Extract</b>
+        <span>Unzip the folder on your computer.</span>
+      </div>
+      <div class="flow-box">
+        <b>3. Extensions</b>
+        <span>Open Chrome extensions settings.</span>
+      </div>
+      <div class="flow-box">
+        <b>4. Dev Mode</b>
+        <span>Turn Developer Mode ON.</span>
+      </div>
+      <div class="flow-box">
+        <b>5. Load</b>
+        <span>Select the /dist folder.</span>
+      </div>
     </div>
   </div>
-</div>
-```
+</section>
 
-  </section>
+<section class="slide" id="warning">
+  <div class="card warning split">
+    <div>
+      <h2>Chrome will <span class="yellow">warn you</span></h2>
+      <p>Chrome shows warnings for unpacked Developer Mode extensions.</p>
+      <p>That warning is about the install method, not the security posture.</p>
+      <p>You are manually choosing to load Chrome Guard from the repo.</p>
+    </div>
+    <div class="warning-icon">⚠️</div>
+  </div>
+</section>
 
-  <section class="slide">
-    <div class="card split">
-      <div>
-        <h2><span class="green">Safe.</span> Private. Secure.</h2>
-        <p>BioAuth uses encrypted reference data. Live verification captures are processed ephemerally and are not stored after matching.</p>
-        <p>No continuous biometric tracking. No data selling.</p>
+<section class="slide" id="install">
+  <div class="card">
+    <h2>Step-by-step <span class="neon">Install</span></h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div><strong>Download the repo</strong><span>Click Code → Download ZIP from the GitHub repository.</span></div>
       </div>
-      <div class="orb">🔐</div>
-    </div>
-  </section>
 
-  <section class="slide">
-    <div class="card">
-      <h2>Remove <span class="neon">anytime</span></h2>
+      <div class="step">
+        <div class="num">2</div>
+        <div><strong>Extract the ZIP</strong><span>Unzip the folder somewhere easy to find, like Desktop or Downloads.</span></div>
+      </div>
 
-```
-  <div class="steps">
-    <div class="step">
-      <div class="num">1</div>
-      <div><strong>Open Extensions</strong><span>Go to <code>chrome://extensions</code></span></div>
-    </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div><strong>Open Chrome Extensions</strong><span>Type this into Chrome:</span><br><span class="copybox">chrome://extensions</span></div>
+      </div>
 
-    <div class="step">
-      <div class="num">2</div>
-      <div><strong>Find Chrome Guard</strong><span>Locate it in your installed extensions list.</span></div>
-    </div>
+      <div class="step">
+        <div class="num">4</div>
+        <div><strong>Enable Developer Mode</strong><span>Turn Developer Mode ON in the top-right corner.</span></div>
+      </div>
 
-    <div class="step">
-      <div class="num">3</div>
-      <div><strong>Click Remove</strong><span>You remain in control at all times.</span></div>
+      <div class="step">
+        <div class="num">5</div>
+        <div><strong>Load Unpacked</strong><span>Click Load unpacked and select the <strong>/dist</strong> folder.</span></div>
+      </div>
     </div>
   </div>
-</div>
-```
+</section>
 
-  </section>
-
-  <section class="slide">
-    <div class="card split">
-      <div>
-        <h2>Premium <span class="neon">Protection</span></h2>
-        <p>Optional SMS alerts and Beta Rogue Guard are available for $5.95/month.</p>
-        <p>Payments are handled by Stripe Checkout. SMS messaging is delivered through Twilio.</p>
-      </div>
-      <div class="orb">📱</div>
+<section class="slide">
+  <div class="card split">
+    <div>
+      <h2>Select the <span class="neon">/dist</span> Folder</h2>
+      <p>This matters.</p>
+      <p>When Chrome asks for the extension folder, select the folder named <strong>/dist</strong>.</p>
+      <p>The <strong>manifest.json</strong> file must be directly inside that folder.</p>
     </div>
-  </section>
+    <div class="orb">📂</div>
+  </div>
+</section>
 
-  <section class="slide">
-    <div class="card split">
-      <div>
-        <h2>You’re <span class="yellow">early</span></h2>
-        <p>This is the public dev-mode release before broader store distribution.</p>
-        <p>Install it. Test it. Push it.</p>
-        <span class="cta">Protect what matters</span>
+<section class="slide">
+  <div class="card">
+    <h2>What Chrome Guard <span class="neon">Does</span></h2>
+
+    <div class="feature-grid">
+      <div class="feature">
+        <b>⚡ Real-time alerts</b>
+        <span>Detects browser protection shutdowns and alerts quickly.</span>
       </div>
-      <div>
-        <img class="logo" src="./assets/chrome-guard.png" alt="Chrome Guard Logo" />
+
+      <div class="feature">
+        <b>🔒 Sensitive page protection</b>
+        <span>Protects high-risk pages like login and checkout flows.</span>
+      </div>
+
+      <div class="feature">
+        <b>🧬 BioAuth verification</b>
+        <span>Uses encrypted reference data and ephemeral verification captures.</span>
+      </div>
+
+      <div class="feature">
+        <b>🧠 Proof-of-Human</b>
+        <span>Supports human verification flows designed to stop automated abuse.</span>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
+<section class="slide" id="verify">
+  <div class="card split">
+    <div>
+      <h2><span class="green">BioAuth</span> Consent</h2>
+      <p>Chrome Guard uses BioAuth verification as part of its security system.</p>
+      <p>A reference image is securely stored and encrypted. Live verification captures are processed ephemerally and are not stored after matching.</p>
+      <p>No continuous biometric tracking. No background camera capture.</p>
+    </div>
+    <div class="orb">🔐</div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="card">
+    <h2>Remove or <span class="neon">Recover</span></h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div><strong>Remove anytime</strong><span>Go to chrome://extensions, find Chrome Guard, and click Remove.</span></div>
+      </div>
+
+      <div class="step">
+        <div class="num">2</div>
+        <div><strong>Account connection</strong><span>Your registered username and email are tied to the browser environment for account continuity.</span></div>
+      </div>
+
+      <div class="step">
+        <div class="num">3</div>
+        <div><strong>Recovery</strong><span>If the extension is removed, account recovery may be available through your registered email and verification status.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="card split">
+    <div>
+      <h2>Premium <span class="neon">Protection</span></h2>
+      <p>Optional SMS alerts and Beta Rogue Guard are available for <strong>$5.95/month</strong>.</p>
+      <p>Payments are handled securely through Stripe Checkout.</p>
+      <p>SMS messaging is delivered through Twilio infrastructure.</p>
+    </div>
+    <div class="orb">📱</div>
+  </div>
+</section>
+
+<section class="slide" id="support">
+  <div class="card split">
+    <div>
+      <h2>Support & <span class="neon">Feedback</span></h2>
+      <p>For bug reports, issues, or page update requests:</p>
+      <p><strong>support@level3id.com</strong></p>
+      <p>Use subject line: <strong>Chrome Guard</strong></p>
+    </div>
+    <div class="orb">✉️</div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="card split">
+    <div>
+      <h2>You’re <span class="yellow">Early</span></h2>
+      <p>This is the public dev-mode release before broader store distribution.</p>
+      <p>Install it. Test it. Push it.</p>
+      <span class="cta">Protect what matters</span>
+    </div>
+    <div>
+      <img class="logo" src="./assets/chrome-guard.png" alt="Chrome Guard Logo" />
+    </div>
+  </div>
+</section>
 
 </main>
 
@@ -487,5 +613,7 @@ code {
   <span>Chrome Guard by Level3ID</span>
   <span>Proof of Human · BioAuth · Real Protection</span>
 </div>
+
 </body>
 </html>
+```
